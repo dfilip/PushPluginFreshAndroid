@@ -106,10 +106,13 @@ static char launchNotificationKey;
             PushPlugin *pushHandler = [controller getCommandInstance:@"PushPlugin"];
 
             pushHandler.notificationMessage = self.launchNotification;
-            self.launchNotification = nil;
+            
             [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
         }
     }
+    //set null after we have looped through all of the windows
+    //test
+    self.launchNotification = nil;
 }
 
 // The accessors use an Associative Reference since you can't define a iVar in a category
