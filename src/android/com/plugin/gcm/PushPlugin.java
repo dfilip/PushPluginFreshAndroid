@@ -123,6 +123,16 @@ public class PushPlugin extends CordovaPlugin {
 		}
 	}
 	
+    //the app is initializing to gForeground = false 
+    //fine for coldstart, bad for everything else
+    //test
+    @Override
+    public void pluginInitialize()
+    {
+    	super.pluginInitialize();
+    	gForeground = true;
+    }
+	
     @Override
     public void onPause(boolean multitasking) {
         super.onPause(multitasking);
