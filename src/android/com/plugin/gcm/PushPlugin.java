@@ -127,9 +127,8 @@ public class PushPlugin extends CordovaPlugin {
     //fine for coldstart, bad for everything else
     //test
     @Override
-    protected void pluginInitialize()
-    {
-    	super.pluginInitialize();
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+    	super.initialize(cordova, webView);
     	gForeground = true;
     }
 	
