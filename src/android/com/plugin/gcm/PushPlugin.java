@@ -45,7 +45,10 @@ public class PushPlugin extends CordovaPlugin {
 	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
 
 		boolean result = false;
-
+		
+		//set gForeground to true on any action under the assumption the the app is in the foreground on register and unregister
+		gForeground = true;
+		
 		Log.v(TAG, "execute: action=" + action);
 
 		if (REGISTER.equals(action)) {
@@ -122,15 +125,6 @@ public class PushPlugin extends CordovaPlugin {
 			}
 		}
 	}
-	
-    //the app is initializing to gForeground = false 
-    //fine for coldstart, bad for everything else
-    //test
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-    	super.initialize(cordova, webView);
-    	gForeground = true;
-    }
 	
     @Override
     public void onPause(boolean multitasking) {
