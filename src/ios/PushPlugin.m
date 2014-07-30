@@ -158,26 +158,31 @@
 
     if (notificationMessage && self.callback)
     {
-        NSMutableString *jsonStr = [NSMutableString stringWithString:@"{"];
+    	NSMutableDictionary *editableNotification = [notificationMessage mutableCopy];
+    	NSError *error;
 
-        [self parseDictionary:notificationMessage intoJSON:jsonStr];
+	if (isInline) {
+		[editableNotification setObject:@"1" forKey:@"foreground"];
+		isInline = NO;
+	}
+    	else
+		[editableNotification setObject:@"0" forKey:@"foreground"];
 
-        if (isInline)
-        {
-            [jsonStr appendFormat:@"foreground:\"%d\"", 1];
-            isInline = NO;
+    	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:editableNotification
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+        if (! jsonData) {
+            NSLog(@"PushPlugin_ERROR: %@", error);
+        } else {
+            NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+            NSLog(@"PushPlugin_JSON: %@",jsonStr);
+
+            NSString * jsCallBack = [NSString stringWithFormat:@"%@(%@);", self.callback, jsonStr];
+            [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
         }
-		else
-            [jsonStr appendFormat:@"foreground:\"%d\"", 0];
-        
-        [jsonStr appendString:@"}"];
 
-        NSLog(@"Msg: %@", jsonStr);
-
-        NSString * jsCallBack = [NSString stringWithFormat:@"%@(%@);", self.callback, jsonStr];
-        [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
-        
-        self.notificationMessage = nil;
+    	self.notificationMessage = nil;
     }
 }
 
