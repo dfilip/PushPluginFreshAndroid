@@ -31,7 +31,7 @@ public class PushPlugin extends CordovaPlugin {
 	private static String gECB;
 	private static String gSenderID;
 	private static Bundle gCachedExtras = null;
-    private static boolean gForeground = false;
+    private static boolean gForeground = true;
 
 	/**
 	 * Gets the application context from cordova's main activity.
@@ -45,9 +45,6 @@ public class PushPlugin extends CordovaPlugin {
 	public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
 
 		boolean result = false;
-		
-		//set gForeground to true on any action under the assumption the the app is in the foreground on register and unregister
-		gForeground = true;
 		
 		Log.v(TAG, "execute: action=" + action);
 
