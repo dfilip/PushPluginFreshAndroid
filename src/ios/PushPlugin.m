@@ -161,12 +161,12 @@
     	NSMutableDictionary *editableNotification = [notificationMessage mutableCopy];
     	NSError *error;
 
-	if (isInline) {
-		[editableNotification setObject:@"1" forKey:@"foreground"];
-		isInline = NO;
-	}
+        if (isInline) {
+        	[editableNotification setObject:@"1" forKey:@"foreground"];
+        	isInline = NO;
+        }
     	else
-		[editableNotification setObject:@"0" forKey:@"foreground"];
+		  [editableNotification setObject:@"0" forKey:@"foreground"];
 
     	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:editableNotification
                                                        options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
