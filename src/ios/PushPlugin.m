@@ -179,7 +179,7 @@
             NSLog(@"PushPlugin_JSON: %@",jsonStr);
 
             NSString * jsCallBack = [NSString stringWithFormat:@"%@(%@);", self.callback, jsonStr];
-            NSLOG(@"jsCallBack: %@",jsCallBack);
+            NSLog(@"jsCallBack: %@",jsCallBack);
             [self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
         }
 
