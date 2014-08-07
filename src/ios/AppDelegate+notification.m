@@ -110,7 +110,8 @@ static char launchNotificationKey;
             pushHandler.notificationMessage = self.launchNotification;
             
             //try to wait 2 secons...
-            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0 waitUntilDone:NO];
+            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0];
         }
     }
     //set null after we have looped through all of the windows
