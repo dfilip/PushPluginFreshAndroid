@@ -155,6 +155,13 @@
 
 - (void)notificationReceived {
     NSLog(@"Notification received");
+    if( self.callback)
+    {
+        NSLog(@"callback present");
+    }else
+        NSLog(@"No callback!!!");
+
+    NSLog(@"callback: %@", self.callback);
 
     if (notificationMessage && self.callback)
     {
