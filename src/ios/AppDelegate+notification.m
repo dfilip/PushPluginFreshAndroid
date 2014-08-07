@@ -109,9 +109,15 @@ static char launchNotificationKey;
 
             pushHandler.notificationMessage = self.launchNotification;
             
-            //try to wait 2 secons...
-            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
-            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0];
+            //only call if the callbackId has been set
+            //possible fix for coldstart bug
+            if(pushHandler.callbackId)
+            {
+                [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+            }
+            
+            
+            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0];
         }
     }
     //set null after we have looped through all of the windows
