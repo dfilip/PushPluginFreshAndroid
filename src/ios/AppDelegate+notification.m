@@ -41,8 +41,10 @@ static char launchNotificationKey;
 // to process notifications in cold-start situations
 - (void)createNotificationChecker:(NSNotification *)notification
 {
+    NSLog(@"Notification Checker");
 	if (notification)
 	{
+        NSLog(@"Setting self.launchNotification");
 		NSDictionary *launchOptions = [notification userInfo];
 		if (launchOptions)
 			self.launchNotification = [launchOptions objectForKey: @"UIApplicationLaunchOptionsRemoteNotificationKey"];
@@ -107,7 +109,8 @@ static char launchNotificationKey;
 
             pushHandler.notificationMessage = self.launchNotification;
             
-            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+            //try to wait 2 secons...
+            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0 waitUntilDone:NO];
         }
     }
     //set null after we have looped through all of the windows
