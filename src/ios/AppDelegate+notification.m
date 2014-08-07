@@ -85,7 +85,11 @@ static char launchNotificationKey;
             PushPlugin *pushHandler = [controller getCommandInstance:@"PushPlugin"];
             pushHandler.notificationMessage = userInfo;
             pushHandler.isInline = YES;
-            [pushHandler notificationReceived];
+            //check for callback id
+            if(pushHandler.callbackId)
+            {
+                [pushHandler notificationReceived];
+            }
         }
     } else {
         //save it for later
