@@ -85,11 +85,8 @@ static char launchNotificationKey;
             PushPlugin *pushHandler = [controller getCommandInstance:@"PushPlugin"];
             pushHandler.notificationMessage = userInfo;
             pushHandler.isInline = YES;
-            //check for callback id
-            if(pushHandler.callbackId)
-            {
-                [pushHandler notificationReceived];
-            }
+            
+            [pushHandler notificationReceived];
         }
     } else {
         //save it for later
@@ -115,10 +112,9 @@ static char launchNotificationKey;
             
             //only call if the callbackId has been set
             //possible fix for coldstart bug
-            if(pushHandler.callbackId)
-            {
-                [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
-            }
+
+            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+
             
             
             //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0];

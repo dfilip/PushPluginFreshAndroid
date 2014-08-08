@@ -87,7 +87,7 @@
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
 	
-	if (notificationMessage)			// if there is a pending startup notification
+	if (notificationMessage && self.callbackId)			// if there is a pending startup notification
 		[self notificationReceived];	// go ahead and process it
 }
 
@@ -100,6 +100,7 @@
 */
 
 - (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"PushPlugin::didRegister");
 
     NSMutableDictionary *results = [NSMutableDictionary dictionary];
     NSString *token = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"withString:@""]
@@ -158,8 +159,12 @@
     if( self.callback)
     {
         NSLog(@"callback present");
-    }else
+        NSLog(@"CallbackId: %@",callbackId);
+    }else{
         NSLog(@"No callback!!!");
+        return;
+    }
+
 
     NSLog(@"callback: %@", self.callback);
 
