@@ -158,7 +158,7 @@
     NSLog(@"Notification received");
     if( self.callback)
     {
-        NSLog(@"callback present");
+        NSLog(@"callback: %@", callback);
         NSLog(@"CallbackId: %@",callbackId);
     }else{
         NSLog(@"No callback!!!");
@@ -229,6 +229,9 @@
 }
 -(void)successWithMessage:(NSString *)message
 {
+    NSLog(@"successWithMessage: %@",message);
+    NSLog(@"callback: %@",callback);
+    NSLog(@"callbackId: %@",callbackId);
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
@@ -236,6 +239,9 @@
 
 -(void)failWithMessage:(NSString *)message withError:(NSError *)error
 {
+    NSLog(@"failWithMessage: %@",message);
+    NSLog(@"callback: %@",callback);
+    NSLog(@"callbackId: %@",callbackId);
     NSString        *errorMessage = (error) ? [NSString stringWithFormat:@"%@ - %@", message, [error localizedDescription]] : message;
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
     
