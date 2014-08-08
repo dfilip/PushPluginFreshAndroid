@@ -45,7 +45,10 @@
 
 - (void)register:(CDVInvokedUrlCommand*)command;
 {
+    NSLog(@"PushPlugin::register");
+    
 	self.callbackId = command.callbackId;
+    NSLog(@"callbackId: %@",callbackId);
 
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
@@ -79,6 +82,7 @@
         notificationTypes |= UIRemoteNotificationTypeAlert;
     
     self.callback = [options objectForKey:@"ecb"];
+    NSLog(@"callback: %@",callback);
 
     if (notificationTypes == UIRemoteNotificationTypeNone)
         NSLog(@"PushPlugin.register: Push notification type is set to none");
@@ -89,6 +93,8 @@
 	
 	if (notificationMessage && self.callbackId)			// if there is a pending startup notification
 		[self notificationReceived];	// go ahead and process it
+
+    NSLog(@"PushPlugin::register done");
 }
 
 /*
@@ -147,6 +153,7 @@
 
 		[self successWithMessage:[NSString stringWithFormat:@"%@", token]];
     #endif
+    NSLog(@"PushPlugin::didRegister done");
 }
 
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -197,6 +204,7 @@
 
     	self.notificationMessage = nil;
     }
+    NSLog(@"PushPlugin::notificationReceived done");
 }
 
 // reentrant method to drill down and surface all sub-dictionaries' key/value pairs into the top level json
