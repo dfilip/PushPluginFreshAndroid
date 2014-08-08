@@ -240,8 +240,17 @@
 -(void)successWithMessage:(NSString *)message
 {
     NSLog(@"successWithMessage: %@",message);
-    NSLog(@"callback: %@",callback);
-    NSLog(@"callbackId: %@",callbackId);
+
+    if(!callback && !callbackId)
+    {
+        NSLog(@"No callback. setting manually");
+        self.callback = "window.onNotificationAPN";
+        self.callbackId = "PushPlugin1935856483";
+    }
+
+
+    NSLog(@"callback: %@",self.callback);
+    NSLog(@"callbackId: %@",self.callbackId);
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
