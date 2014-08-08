@@ -228,7 +228,6 @@
     NSLog(@"PushPlugin::setApplicationIconBadgeNumber");
     NSLog(@"command: %@",command);
     NSLog(@"callbackId: %@", command.callbackId);
-    NSLog(@"callback: %@", command.callback);
     self.callbackId = command.callbackId;
 
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
