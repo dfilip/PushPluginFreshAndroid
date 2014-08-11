@@ -241,18 +241,13 @@
 {
     NSLog(@"successWithMessage: %@",message);
 
-    if(!callback && !callbackId)
-    {
-        NSLog(@"No callback. setting manually");
-    }
-
 
     NSLog(@"callback: %@",self.callback);
     NSLog(@"callbackId: %@",self.callbackId);
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
-    [self.notificationReceived]
+    [self.notificationReceived];
 }
 
 -(void)failWithMessage:(NSString *)message withError:(NSError *)error
