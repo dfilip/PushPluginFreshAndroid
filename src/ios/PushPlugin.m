@@ -247,7 +247,7 @@
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];
     
     [self.commandDelegate sendPluginResult:commandResult callbackId:self.callbackId];
-    [self.notificationReceived];
+    [self notificationReceived];
 }
 
 -(void)failWithMessage:(NSString *)message withError:(NSError *)error
