@@ -105,7 +105,7 @@ static char launchNotificationKey;
 
     for (WebViewController *controller in [root.allWebViewControllers allValues]) {
 
-        if (![controller.webView isLoading] && self.launchNotification) {
+        if (self.launchNotification) {
             PushPlugin *pushHandler = [controller getCommandInstance:@"PushPlugin"];
 
             pushHandler.notificationMessage = self.launchNotification;
@@ -113,11 +113,10 @@ static char launchNotificationKey;
             //only call if the callbackId has been set
             //possible fix for coldstart bug
 
-            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
-
-            
-            
-            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler afterDelay:3.0];
+            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+            pushHandler.isInline = NO;
+            //try doing like aboe
+            [pushHandler notificationReceived];
         }
     }
     //set null after we have looped through all of the windows

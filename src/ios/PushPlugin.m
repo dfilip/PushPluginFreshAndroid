@@ -46,9 +46,15 @@
 - (void)register:(CDVInvokedUrlCommand*)command;
 {
     NSLog(@"PushPlugin::register");
+    if(!command.callbackId)
+    {
+        NSLog(@"No callback found in command! returning!!");
+        return;
+    }
+    
     
 	self.callbackId = command.callbackId;
-    NSLog(@"callbackId: %@",callbackId);
+    NSLog(@"setting callbackId: %@",callbackId);
 
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
@@ -82,7 +88,7 @@
         notificationTypes |= UIRemoteNotificationTypeAlert;
     
     self.callback = [options objectForKey:@"ecb"];
-    NSLog(@"callback: %@",callback);
+    NSLog(@"setting callback: %@",callback);
 
     if (notificationTypes == UIRemoteNotificationTypeNone)
         NSLog(@"PushPlugin.register: Push notification type is set to none");
@@ -240,7 +246,10 @@
 -(void)successWithMessage:(NSString *)message
 {
     NSLog(@"successWithMessage: %@",message);
-
+    if(!callbackId)
+    {
+        return;
+    }
 
     NSLog(@"callback: %@",self.callback);
     NSLog(@"callbackId: %@",self.callbackId);
