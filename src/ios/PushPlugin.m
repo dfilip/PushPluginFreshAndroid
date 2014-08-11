@@ -96,8 +96,6 @@
     isInline = NO;
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
-	
-    NSLog(@"NotificationMessage: %@",self.notificationMessage);
 
 	if (self.notificationMessage && self.callbackId)			// if there is a pending startup notification
 		[self notificationReceived];	// go ahead and process it
@@ -171,6 +169,9 @@
 
 - (void)notificationReceived {
     NSLog(@"Notification received");
+
+    NSLog(@"notificationMessage: %@",self.notificationMessage);
+
     if( self.callback)
     {
         NSLog(@"callback: %@", callback);
@@ -183,7 +184,7 @@
 
     NSLog(@"callback: %@", self.callback);
 
-    if (notificationMessage && self.callback)
+    if (self.notificationMessage && self.callback)
     {
     	NSMutableDictionary *editableNotification = [notificationMessage mutableCopy];
     	NSError *error;
