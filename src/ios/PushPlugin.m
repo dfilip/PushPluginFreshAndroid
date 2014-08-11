@@ -244,8 +244,6 @@
     if(!callback && !callbackId)
     {
         NSLog(@"No callback. setting manually");
-        self.callback = @"window.onNotificationAPN";
-        self.callbackId = @"PushPlugin1935856483";
     }
 
 
