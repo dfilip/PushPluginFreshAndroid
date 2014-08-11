@@ -97,7 +97,9 @@
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
 	
-	if (notificationMessage && self.callbackId)			// if there is a pending startup notification
+    NSLog(@"NotificationMessage: %@",self.notificationMessage);
+
+	if (self.notificationMessage && self.callbackId)			// if there is a pending startup notification
 		[self notificationReceived];	// go ahead and process it
 
     NSLog(@"PushPlugin::register done");
