@@ -106,8 +106,9 @@ static bool firstPush;
     if(firstPush)
     {
         [self performSelector:@selector(callMainThread) withObject:nil afterDelay:5.0];
-    }else{
         firstPush=NO;
+    }else{
+        
         [self performSelector:@selector(callMainThread) withObject:nil];
     }
     
