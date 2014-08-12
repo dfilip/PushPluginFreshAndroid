@@ -22,6 +22,8 @@ static char launchNotificationKey;
 {
     Method original, swizzled;
 
+    self.first = YES;
+
     original = class_getInstanceMethod(self, @selector(init));
     swizzled = class_getInstanceMethod(self, @selector(swizzled_init));
     method_exchangeImplementations(original, swizzled);
@@ -113,14 +115,21 @@ static char launchNotificationKey;
             //only call if the callbackId has been set
             //possible fix for coldstart bug
 
-            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+            if(first)
+            {
+                [pushHandler performSelector:@selector(notificationReceived) withObject:pushHandler afterDelay:5.0];
+            }else{
+                [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+            }
+            
             pushHandler.isInline = NO;
             //try doing like aboe
-            [pushHandler notificationReceived];
+            //[pushHandler notificationReceived];
         }
     }
     //set null after we have looped through all of the windows
     //test
+    self.first = NO;
     self.launchNotification = nil;
 }
 

@@ -15,5 +15,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 
 @property (nonatomic, retain) NSDictionary	*launchNotification;
+@property (nonatomic, retain) BOOL first;
 
 @end
