@@ -22,7 +22,7 @@ static bool firstPush;
 + (void)load
 {
     Method original, swizzled;
-    pushCount = 0;
+    firstPush = YES;
 
     original = class_getInstanceMethod(self, @selector(init));
     swizzled = class_getInstanceMethod(self, @selector(swizzled_init));
@@ -107,7 +107,7 @@ static bool firstPush;
     {
         [self performSelector:@selector(callMainThread) withObject:nil afterDelay:5.0];
     }else{
-        firstPush=false;
+        firstPush=NO;
         [self performSelector:@selector(callMainThread) withObject:nil];
     }
     
