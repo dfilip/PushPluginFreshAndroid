@@ -22,8 +22,6 @@ static char launchNotificationKey;
 {
     Method original, swizzled;
 
-    self.first = YES;
-
     original = class_getInstanceMethod(self, @selector(init));
     swizzled = class_getInstanceMethod(self, @selector(swizzled_init));
     method_exchangeImplementations(original, swizzled);
@@ -111,16 +109,11 @@ static char launchNotificationKey;
             PushPlugin *pushHandler = [controller getCommandInstance:@"PushPlugin"];
 
             pushHandler.notificationMessage = self.launchNotification;
-            
-            //only call if the callbackId has been set
-            //possible fix for coldstart bug
 
-            if(first)
-            {
-                [pushHandler performSelector:@selector(notificationReceived) withObject:pushHandler afterDelay:5.0];
-            }else{
-                [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
-            }
+            [pushHandler performSelector:@selector(notificationReceived) withObject:pushHandler afterDelay:5.0];
+
+            //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+
             
             pushHandler.isInline = NO;
             //try doing like aboe
