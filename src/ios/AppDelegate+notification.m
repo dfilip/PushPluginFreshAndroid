@@ -101,6 +101,13 @@ static char launchNotificationKey;
     //zero badge
     application.applicationIconBadgeNumber = 0;
 
+    [self performSelector:@selector(callMainThread) withObject:nil afterDelay:5.0];
+}
+
+
+- (void)callMainThread{
+
+
     ApplicationViewController *root = (ApplicationViewController*)[[ApplicationManager instance] currentRootViewController];
 
     for (WebViewController *controller in [root.allWebViewControllers allValues]) {
@@ -110,8 +117,7 @@ static char launchNotificationKey;
 
             pushHandler.notificationMessage = self.launchNotification;
 
-            [self performSelector:@selector(callMainThread) withObject:pushHandler afterDelay:5.0];
-
+            [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
             //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
 
             
@@ -123,11 +129,9 @@ static char launchNotificationKey;
     //set null after we have looped through all of the windows
     //test
     self.launchNotification = nil;
-}
 
 
-- (void)callMainThread:(PushPlugin *)pushHandler{
-    [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
+    
 }
 
 // The accessors use an Associative Reference since you can't define a iVar in a category
