@@ -122,7 +122,6 @@ static char launchNotificationKey;
     }
     //set null after we have looped through all of the windows
     //test
-    self.first = NO;
     self.launchNotification = nil;
 }
 
