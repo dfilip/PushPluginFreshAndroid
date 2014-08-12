@@ -110,7 +110,7 @@ static char launchNotificationKey;
 
             pushHandler.notificationMessage = self.launchNotification;
 
-            [pushHandler performSelector:@selector(notificationReceived) withObject:pushHandler afterDelay:5.0];
+            [self performSelector:@selector(callMainThread) withObject:pushHandler afterDelay:5.0];
 
             //[pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
 
@@ -123,6 +123,11 @@ static char launchNotificationKey;
     //set null after we have looped through all of the windows
     //test
     self.launchNotification = nil;
+}
+
+
+- (void)callMainThread:(PushPlugin *)pushHandler{
+    [pushHandler performSelectorOnMainThread:@selector(notificationReceived) withObject:pushHandler waitUntilDone:NO];
 }
 
 // The accessors use an Associative Reference since you can't define a iVar in a category
