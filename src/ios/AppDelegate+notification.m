@@ -13,6 +13,7 @@
 #import "ApplicationManager.h"
 
 static char launchNotificationKey;
+static bool firstPush;
 
 @implementation AppDelegate (notification)
 
@@ -21,6 +22,7 @@ static char launchNotificationKey;
 + (void)load
 {
     Method original, swizzled;
+    pushCount = 0;
 
     original = class_getInstanceMethod(self, @selector(init));
     swizzled = class_getInstanceMethod(self, @selector(swizzled_init));
@@ -101,7 +103,14 @@ static char launchNotificationKey;
     //zero badge
     application.applicationIconBadgeNumber = 0;
 
-    [self performSelector:@selector(callMainThread) withObject:nil afterDelay:5.0];
+    if(firstPush)
+    {
+        [self performSelector:@selector(callMainThread) withObject:nil afterDelay:5.0];
+    }else{
+        firstPush=false;
+        [self performSelector:@selector(callMainThread) withObject:nil];
+    }
+    
 }
 
 
